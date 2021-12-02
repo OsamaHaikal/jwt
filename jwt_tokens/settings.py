@@ -13,7 +13,7 @@ from datetime import timedelta
 
 from pathlib import Path
 import os
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fwb3$0=fdi4$-_2xgyql7bj4v6^1cq9kv^5(jwc)s_$x5=gnn4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -101,6 +101,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'jwt_tokens.urls'
@@ -126,7 +127,7 @@ WSGI_APPLICATION = 'jwt_tokens.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -136,6 +137,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT':'5432',
     }
+}"""
+DATABASE = {
+    'default': {dj_database_url.config(default='postgres://postgres:ASDasd123@localhost/jwt_authentication')}
+
 }
 
 
@@ -190,3 +195,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATICFILES_STORAGE = 'whitenoise.storage.compressedmanifeststaticfilesstorage.'
